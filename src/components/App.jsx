@@ -2,6 +2,7 @@ import React from "react";
 import "../pages/index.css";
 import api from "../utils/Api.js";
 import Header from "./Header.jsx";
+import Login from "./Login.jsx";
 import Main from "./Main.jsx";
 import ConfirmDeleteCardPopup from "./ConfirmDeleteCardPopup.jsx";
 import EditProfilePopup from "./EditProfilePopup.jsx";
@@ -114,12 +115,20 @@ function App() {
     setSelectedCard(card);
     setImagePopupOpen(true);
   };
+  //Login
+  const [isUserRegistered, setUserStatus] = React.useState(true);
+
 
   return (
     <div className="page">
       <CurrentUserContext.Provider value={{ currentUser }}>
         <Header />
-        <Main
+        <Login
+          isOpen={isUserRegistered}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
+        {/*<Main
           handleEditAvatarClick={onEditAvatarClick}
           handleEditProfileClick={onEditProfileClick}
           handleAddPlaceClick={onAddPlaceClick}
@@ -131,7 +140,7 @@ function App() {
           selectedCard={selectedCard}
           closeAllPopups={closeAllPopups}
           isImagePopupOpen={isImagePopupOpen}
-        />
+        />*/}
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}

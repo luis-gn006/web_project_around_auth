@@ -1,0 +1,54 @@
+import React from "react";
+import formConfig from "../utils/constants";
+import FormValidator from "./FormValidator";
+function DivWithForm({
+  name,
+  title,
+  isOpen,
+  children,
+  buttonText,
+  onSubmit,
+}) {
+  //Form Validation
+  const formRef = React.useRef();
+  React.useEffect(() => {
+    const formValidation = new FormValidator(formConfig, formRef.current);
+    formValidation.enableValidation();
+  }, []);
+  React.useEffect(() => {
+    if (!isOpen) {
+      const formValidation = new FormValidator(formConfig, formRef.current);
+      formValidation.resetValidation();
+    }
+  }, [isOpen]);
+
+  return (
+    <>
+      <section
+        className={`div div-${name} ${isOpen ? "div__opened" : " "}`}
+      >
+        <div className="div__container">
+          <h2 className="div__heading">{title}</h2>
+          <form
+            onSubmit={onSubmit}
+            className={`div__form div__form-${name}`}
+            noValidate
+            ref={formRef}
+          >
+            <fieldset className="div__form-set">
+              {children}
+              <button
+                type="submit"
+                className={`div__form-button div__form-button_active div__save-button-${name}`}
+              >
+                {buttonText}
+              </button>
+            </fieldset>
+          </form>
+        </div>
+      </section>
+    </>
+  );
+}
+
+export default DivWithForm;
