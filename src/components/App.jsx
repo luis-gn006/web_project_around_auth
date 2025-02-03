@@ -3,6 +3,7 @@ import "../pages/index.css";
 import api from "../utils/Api.js";
 import Header from "./Header.jsx";
 import Login from "./Login.jsx";
+import Register from "./Register.jsx";
 import Main from "./Main.jsx";
 import ConfirmDeleteCardPopup from "./ConfirmDeleteCardPopup.jsx";
 import EditProfilePopup from "./EditProfilePopup.jsx";
@@ -123,10 +124,14 @@ function App() {
     <div className="page">
       <CurrentUserContext.Provider value={{ currentUser }}>
         <Header />
-        <Login
+        <Register
           isOpen={isUserRegistered}
           onUpdateAvatar={handleUpdateAvatar}
         />
+        {/*<Login
+          isOpen={isUserRegistered}
+          onUpdateAvatar={handleUpdateAvatar}
+        />*/}
         {/*<Main
           handleEditAvatarClick={onEditAvatarClick}
           handleEditProfileClick={onEditProfileClick}
