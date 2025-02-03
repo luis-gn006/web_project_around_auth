@@ -1,6 +1,7 @@
 import React from "react";
 import {divConfig} from "../utils/constants";
 import FormValidator from "./FormValidator";
+import { Link } from "react-router-dom";
 function DivWithForm({
   name,
   title,
@@ -46,7 +47,9 @@ function DivWithForm({
               </button>
             </fieldset>
           </form>
-          <p className="div__message">{`${message}`}</p>
+          <Link to="/login" className="div__message">
+          {`${message}`}
+        </Link>
         </div>
       </section>
     </>

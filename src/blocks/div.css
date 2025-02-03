@@ -161,6 +161,12 @@
   color: #CCC;
   padding: 15px 0 30px 0;
   margin: 0;
+  text-decoration: none;
+}
+.div__message:hover {
+  opacity: 0.8;
+  filter: drop-shadow(0 4px 4px #000);
+  cursor: pointer;
 }
 
 @media screen and (min-width: 800px) {

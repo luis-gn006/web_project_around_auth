@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import "../pages/index.css";
 import api from "../utils/Api.js";
+import * as auth from '../utils/auth.js'
 import Header from "./Header.jsx";
 import Login from "./Login.jsx";
 import Register from "./Register.jsx";
@@ -119,8 +120,24 @@ function App() {
     setImagePopupOpen(true);
   };
   //Login
-  const [isUserRegistered, setUserStatus] = React.useState(true);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  const handleRegistration = async ({email, password}) => {
+    return await auth.register(email, password)
+      .then(() => {
+        console.log(email, password);
+      })
+      .catch(console.error);
+  }
+
+  const handleLogin = async ({email, password}) => {
+    return await auth.login(email, password)
+      .then(() => {
+        console.log(email, password);
+      })
+      .catch(console.error);
+  }
+
 
 
   return (
@@ -143,14 +160,14 @@ function App() {
           <Route path="/register" element={
 
             <Register
-          isOpen={isUserRegistered}
-          onUpdateAvatar={handleUpdateAvatar}
+          isOpen={true}
+          onRegistration={handleRegistration}
         />
         } />
 
           <Route path="/login" element={<Login
-          isOpen={isUserRegistered}
-          onUpdateAvatar={handleUpdateAvatar}
+          isOpen={true}
+          onLogin={handleLogin}
         />} />
 
           <Route path="/" element={

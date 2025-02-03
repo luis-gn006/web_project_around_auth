@@ -1,6 +1,11 @@
 .header {
   width: 100%;
 }
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
 .header__logo {
   width: 122px;
   margin-left: 9%;
@@ -11,6 +16,16 @@
   height: 1px;
   background-color: #545454;
   width: 100%;
+}
+.header__register-login-link {
+  font-size: 18px;
+  color: #CCC;
+  text-decoration: none;
+}
+.header__register-login-link:hover {
+  opacity: 0.8;
+  filter: drop-shadow(0 4px 4px #000);
+  cursor: pointer;
 }
 
 @media screen and (min-width: 800px) {

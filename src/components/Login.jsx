@@ -2,31 +2,32 @@ import React from "react";
 import DivWithForm from "./DivWithForm.jsx";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
-function Login({ isOpen, onUpdateUser }) {
+function Login({ isOpen, onLogin }) {
   const { currentUser } = React.useContext(CurrentUserContext);
-  const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [isPatching, setIsPatching] = React.useState(false);
 
   React.useEffect(() => {
     if (currentUser) {
-      setName(/*currentUser.name ||*/ "");
-      setDescription(/*currentUser.about ||*/ "");
+      setEmail(/*currentUser.name ||*/ "");
+      setPassword(/*currentUser.about ||*/ "");
     }
   }, [currentUser]);
 
   function handleChangeEmail(e) {
-    setName(e.target.value);
+    setEmail(e.target.value);
   }
-  function handleChangeDescription(e) {
-    setDescription(e.target.value);
+  function handleChangePassword(e) {
+    setPassword(e.target.value);
   }
+
   function handleSubmit(e) {
     e.preventDefault();
     setIsPatching(true);
-    onUpdateUser({
-      name,
-      about: description,
+    onLogin({
+      email,
+      password,
     }).finally(() => {
       setIsPatching(false);
     });
@@ -60,7 +61,7 @@ function Login({ isOpen, onUpdateUser }) {
           minLength="2"
           maxLength="40"
           onChange={handleChangeEmail}
-          value={name}
+          value={email}
         />
         <div className="div__line div__line-email"></div>
         <span className="div__input-error email-error"></span>
@@ -74,8 +75,8 @@ function Login({ isOpen, onUpdateUser }) {
           required
           minLength="2"
           maxLength="200"
-          onChange={handleChangeDescription}
-          value={description}
+          onChange={handleChangePassword}
+          value={password}
         />
         <div className="div__line div__line-password"></div>
         <span className="div__input-error password-error"></span>

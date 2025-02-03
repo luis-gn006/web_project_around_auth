@@ -1,9 +1,29 @@
-const baseUrl = "http://localhost:3000/";
+export const BASE_URL = "https://se-register-api.en.tripleten-services.com/v1";
 
-function register(email, password) {
-  return this._makeRequest("/signup", "POST", { email, password });
+export const register = (email, password) => {
+  return fetch(`${BASE_URL}/signup`, {
+    method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password}),
+    })
+      .then((res) => {
+        return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+      })
 };
 
-function login(email, password) {
-  return this._makeRequest("/signin", "POST", { email, password });
+export const login = (email, password) => {
+  return fetch(`${BASE_URL}/signin`, {
+    method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password}),
+    })
+      .then((res) => {
+        return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+      })
 };
