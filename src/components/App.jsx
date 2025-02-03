@@ -1,10 +1,11 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "../pages/index.css";
 import api from "../utils/Api.js";
 import Header from "./Header.jsx";
 import Login from "./Login.jsx";
 import Register from "./Register.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 import Main from "./Main.jsx";
 import ConfirmDeleteCardPopup from "./ConfirmDeleteCardPopup.jsx";
 import EditProfilePopup from "./EditProfilePopup.jsx";
@@ -119,6 +120,7 @@ function App() {
   };
   //Login
   const [isUserRegistered, setUserStatus] = React.useState(true);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
 
   return (
@@ -126,18 +128,34 @@ function App() {
       <CurrentUserContext.Provider value={{ currentUser }}>
         <Header />
         <Routes>
-          <Route path="/" element={<Register
+
+          <Route
+            path="*"
+            element={
+            isLoggedIn ? (
+            <Navigate to="/" replace/>
+            ) : (
+            <Navigate to="/login" replace/>
+            )
+            }
+          />
+
+          <Route path="/register" element={
+
+            <Register
           isOpen={isUserRegistered}
           onUpdateAvatar={handleUpdateAvatar}
-        />} />
+        />
+        } />
 
           <Route path="/login" element={<Login
           isOpen={isUserRegistered}
           onUpdateAvatar={handleUpdateAvatar}
         />} />
 
-          <Route path="/cards" element={
+          <Route path="/" element={
           <>
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
             <Main
           handleEditAvatarClick={onEditAvatarClick}
           handleEditProfileClick={onEditProfileClick}
@@ -171,6 +189,7 @@ function App() {
           onClose={closeAllPopups}
           onConfirmDelete={handleConfirmDeleteCard}
         />
+        </ProtectedRoute>
           </>
         } />
         </Routes>
