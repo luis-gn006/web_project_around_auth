@@ -1,4 +1,5 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
 import "../pages/index.css";
 import api from "../utils/Api.js";
 import Header from "./Header.jsx";
@@ -124,15 +125,20 @@ function App() {
     <div className="page">
       <CurrentUserContext.Provider value={{ currentUser }}>
         <Header />
-        <Register
+        <Routes>
+          <Route path="/" element={<Register
           isOpen={isUserRegistered}
           onUpdateAvatar={handleUpdateAvatar}
-        />
-        {/*<Login
+        />} />
+
+          <Route path="/login" element={<Login
           isOpen={isUserRegistered}
           onUpdateAvatar={handleUpdateAvatar}
-        />*/}
-        {/*<Main
+        />} />
+
+          <Route path="/cards" element={
+          <>
+            <Main
           handleEditAvatarClick={onEditAvatarClick}
           handleEditProfileClick={onEditProfileClick}
           handleAddPlaceClick={onAddPlaceClick}
@@ -144,8 +150,8 @@ function App() {
           selectedCard={selectedCard}
           closeAllPopups={closeAllPopups}
           isImagePopupOpen={isImagePopupOpen}
-        />*/}
-        <EditAvatarPopup
+        />
+          <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
@@ -165,6 +171,9 @@ function App() {
           onClose={closeAllPopups}
           onConfirmDelete={handleConfirmDeleteCard}
         />
+          </>
+        } />
+        </Routes>
         <Footer />
       </CurrentUserContext.Provider>
     </div>
