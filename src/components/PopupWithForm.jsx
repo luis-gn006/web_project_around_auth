@@ -1,5 +1,5 @@
 import React from "react";
-import formConfig from "../utils/constants";
+import {formConfig} from "../utils/constants";
 import FormValidator from "./FormValidator";
 function PopupWithForm({
   name,

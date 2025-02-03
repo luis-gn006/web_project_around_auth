@@ -10,12 +10,12 @@ function Login({ isOpen, onUpdateUser }) {
 
   React.useEffect(() => {
     if (currentUser) {
-      setName(currentUser.name || "");
-      setDescription(currentUser.about || "");
+      setName(/*currentUser.name ||*/ "");
+      setDescription(/*currentUser.about ||*/ "");
     }
   }, [currentUser]);
 
-  function handleChangeName(e) {
+  function handleChangeEmail(e) {
     setName(e.target.value);
   }
   function handleChangeDescription(e) {
@@ -42,42 +42,43 @@ function Login({ isOpen, onUpdateUser }) {
   return (
     <>
       <DivWithForm
-        name={"Login"}
+        name={"login"}
         title={"Inicia sesión"}
+        message={'¿Aún no eres miembro? Regístrate aquí'}
         isOpen={isOpen}
-        buttonText={isPatching ? "Guardando..." : "Inicia sesión"}
+        buttonText={isPatching ? "Iniciando sesión..." : "Inicia sesión"}
         onSubmit={handleSubmit}
       >
-        <label htmlFor="name" className="div__form-label"></label>
+        <label htmlFor="email" className="div__form-label"></label>
         <input
-          type="text"
-          className="div__form-input div__form-name"
-          id="name"
-          name="name"
-          placeholder="Nombre"
+          type="email"
+          className="div__form-input div__form-email"
+          id="email"
+          name="email"
+          placeholder="Correo electrónico"
           required
           minLength="2"
           maxLength="40"
-          onChange={handleChangeName}
+          onChange={handleChangeEmail}
           value={name}
         />
-        <div className="div__line div__line-name"></div>
-        <span className="div__input-error name-error"></span>
-        <label htmlFor="job" className="div__form-label"></label>
+        <div className="div__line div__line-email"></div>
+        <span className="div__input-error email-error"></span>
+        <label htmlFor="password" className="div__form-label"></label>
         <input
-          type="text"
-          className="div__form-input div__form-job"
-          id="job"
-          name="job"
-          placeholder="Acerca de mí"
+          type="password"
+          className="div__form-input div__form-password"
+          id="password"
+          name="password"
+          placeholder="Contraseña"
           required
           minLength="2"
           maxLength="200"
           onChange={handleChangeDescription}
           value={description}
         />
-        <div className="div__line div__line-job"></div>
-        <span className="div__input-error job-error"></span>
+        <div className="div__line div__line-password"></div>
+        <span className="div__input-error password-error"></span>
       </DivWithForm>
     </>
   );

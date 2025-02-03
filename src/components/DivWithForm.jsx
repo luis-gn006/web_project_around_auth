@@ -1,9 +1,10 @@
 import React from "react";
-import formConfig from "../utils/constants";
+import {divConfig} from "../utils/constants";
 import FormValidator from "./FormValidator";
 function DivWithForm({
   name,
   title,
+  message,
   isOpen,
   children,
   buttonText,
@@ -12,12 +13,12 @@ function DivWithForm({
   //Form Validation
   const formRef = React.useRef();
   React.useEffect(() => {
-    const formValidation = new FormValidator(formConfig, formRef.current);
+    const formValidation = new FormValidator(divConfig, formRef.current);
     formValidation.enableValidation();
   }, []);
   React.useEffect(() => {
     if (!isOpen) {
-      const formValidation = new FormValidator(formConfig, formRef.current);
+      const formValidation = new FormValidator(divConfig, formRef.current);
       formValidation.resetValidation();
     }
   }, [isOpen]);
@@ -45,6 +46,7 @@ function DivWithForm({
               </button>
             </fieldset>
           </form>
+          <p className="div__message">{`${message}`}</p>
         </div>
       </section>
     </>

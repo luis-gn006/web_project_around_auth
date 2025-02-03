@@ -125,7 +125,6 @@ function App() {
         <Header />
         <Login
           isOpen={isUserRegistered}
-          onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
         />
         {/*<Main

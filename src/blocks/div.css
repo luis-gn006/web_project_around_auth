@@ -1,9 +1,10 @@
 .div {
-  width: 100%;
+  width: 358px;
   height: 100%;
   background-color: #000000be;
   z-index: 1;
   display: none;
+  padding-top: 60px;
 }
 .div-profile-avatar {
   padding: 0 0 12%;
@@ -62,10 +63,10 @@
 }
 
 .div__heading {
-  margin: 0 8%;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 0 0 26% 0;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 900;
+  padding: 0 0 20px 0;
   text-align: center;
 }
 .div__heading-delete {
@@ -73,13 +74,17 @@
 }
 .div__form-set {
   border: none;
+  margin: 0;
+  padding: 0;
 }
 .div__form-input {
   border: none;
-  margin: 0 3%;
+  margin: 0;
   font-size: 14px;
-  padding-bottom: 3.5%;
+  padding: 0 0 13px 0;
   outline: none;
+  background-color: #000;
+  color: #CCC;
 }
 .div__form-job {
   margin-top: 12%;
@@ -89,13 +94,13 @@
 }
 .div__form-input:focus {
   border: 1px solid #529cfc;
-  width: 90%;
+  width: 98%;
 }
 .div__line {
-  margin: 1% 0 2% 3%;
   height: 1px;
   background-color: #c4c4c4;
-  width: 90%;
+  width: 100%;
+  margin: 0;
 }
 .div__form-input_error {
   background-color: #ff0000;
@@ -149,6 +154,14 @@
   color: #c4c4c4;
   font-size: 14px;
 }
+.div__message {
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  color: #CCC;
+  padding: 15px 0 30px 0;
+  margin: 0;
+}
 
 @media screen and (min-width: 800px) {
   .div__container {
@@ -156,18 +169,18 @@
   }
   .div__heading {
     padding: 0 0 54px 0;
-    margin: 0 36px;
+    margin: 0 0;
     font-size: 24px;
   }
   .div__heading-delete {
     padding: 0 0 5px 0;
   }
   .div__line {
-    margin: 1% 0 2% 5%;
+    margin: 0;
   }
   .div__form-input {
-    margin: 0 24px;
-    padding: 0;
+    margin: 0;
+    padding: 30px 0 13px 0;
     width: 300px;
   }
   .div__form-job {
@@ -180,12 +193,14 @@
     margin: 8px 6% 0;
   }
   .div__form-button {
-    margin: 22px 0 36px 20px;
     width: 358px;
     height: 50px;
+    background-color: #FFF;
+    color: #000;
+    margin: 230px 0 0 0;
   }
   .div__form-button_disabled {
-    margin: 22px 0 36px 20px;
+    margin: 230px 0 0 0;
     width: 358px;
     height: 50px;
   }
