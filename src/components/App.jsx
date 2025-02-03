@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import "../pages/index.css";
 import api from "../utils/Api.js";
 import * as auth from '../utils/auth.js'
@@ -126,6 +126,7 @@ function App() {
     return await auth.register(email, password)
       .then(() => {
         console.log(email, password);
+        navigate("/login");
       })
       .catch(console.error);
   }
@@ -137,6 +138,8 @@ function App() {
       })
       .catch(console.error);
   }
+
+  const navigate = useNavigate();
 
 
 

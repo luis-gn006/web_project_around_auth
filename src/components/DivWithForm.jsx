@@ -1,7 +1,8 @@
 import React from "react";
 import {divConfig} from "../utils/constants";
 import FormValidator from "./FormValidator";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
 function DivWithForm({
   name,
   title,
@@ -23,6 +24,10 @@ function DivWithForm({
       formValidation.resetValidation();
     }
   }, [isOpen]);
+
+  //Location
+  const location = useLocation();
+  React.useEffect(() => {}, [location]);
 
   return (
     <>
@@ -47,9 +52,12 @@ function DivWithForm({
               </button>
             </fieldset>
           </form>
-          <Link to="/login" className="div__message">
-          {`${message}`}
-        </Link>
+        {location.pathname == "/login" && (
+          <Link to="/register" className="div__message">{`${message}`}</Link>
+          )}
+        {location.pathname == "/register" && (
+          <Link to="/login" className="div__message">{`${message}`}</Link>
+          )}
         </div>
       </section>
     </>
