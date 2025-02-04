@@ -1,6 +1,8 @@
 import React from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import "../pages/index.css";
+import popupCross from "../images/popup__cross.svg";
+import popupCheck from "../images/popup__check.svg";
 import api from "../utils/Api.js";
 import * as auth from '../utils/auth.js'
 import Header from "./Header.jsx";
@@ -8,6 +10,7 @@ import Login from "./Login.jsx";
 import Register from "./Register.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import Main from "./Main.jsx";
+import InfoTooltip from "./InfoTooltip.jsx";
 import ConfirmDeleteCardPopup from "./ConfirmDeleteCardPopup.jsx";
 import EditProfilePopup from "./EditProfilePopup.jsx";
 import EditAvatarPopup from "./EditAvatarPopup.jsx";
@@ -50,6 +53,8 @@ function App() {
     setAddPlacePopupOpen(false);
     setImagePopupOpen(false);
     setConfirmDeletePopupOpen(false);
+    setInfoErrorPopupOpen(false);
+    setInfoOkPopupOpen(false);
   };
   React.useEffect(() => {
     document.addEventListener("keydown", (e) => {
@@ -127,16 +132,26 @@ function App() {
       .then(() => {
         console.log(email, password);
         navigate("/login");
+        setInfoOkPopupOpen(true);
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.log(err);
+        setInfoErrorPopupOpen(true);
+      });
   }
+
+  //Popup info
+  const [isInfoErrorPopupOpen, setInfoErrorPopupOpen] = React.useState(false);
+  const [isInfoOkPopupOpen, setInfoOkPopupOpen] = React.useState(false);
 
   const handleLogin = async ({email, password}) => {
     return await auth.login(email, password)
       .then(() => {
         console.log(email, password);
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   const navigate = useNavigate();
@@ -161,17 +176,36 @@ function App() {
           />
 
           <Route path="/register" element={
-
+            <>
             <Register
           isOpen={true}
           onRegistration={handleRegistration}
         />
+        <InfoTooltip
+            name={'error'}
+            message={'Uy, algo salió mal. Por favor, inténtalo de nuevo.'}
+            icon={popupCross}
+            onClose={closeAllPopups}
+            isOpen={isInfoErrorPopupOpen}
+            />
+        </>
         } />
 
-          <Route path="/login" element={<Login
+          <Route path="/login" element={
+            <>
+            <Login
           isOpen={true}
           onLogin={handleLogin}
-        />} />
+        />
+        <InfoTooltip
+            name={'aprobed'}
+            message={'¡Correcto! Ya estás registrado.'}
+            icon={popupCheck}
+            onClose={closeAllPopups}
+            isOpen={isInfoOkPopupOpen}
+            />
+            </>
+            } />
 
           <Route path="/" element={
           <>
