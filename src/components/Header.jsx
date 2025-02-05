@@ -3,7 +3,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
-function Header({handleLogout, email}) {
+function Header({handleLogout, email, }) {
   const currentUser = React.useContext(CurrentUserContext);
   const location = useLocation();
 

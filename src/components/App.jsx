@@ -127,10 +127,24 @@ function App() {
   //Login
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
+  const handleLogin = async ({email, password}) => {
+    return await auth.login(email, password)
+      .then((data) => {
+        updateUserInfo();
+        console.log(email, password);
+        setEmail(email);
+        setIsLoggedIn(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoggedIn(false);
+      });
+  }
+
+  //Registration
   const handleRegistration = async ({email, password}) => {
     return await auth.register(email, password)
-      .then(() => {
-        console.log(email, password);
+      .then(({data}) => {
         navigate("/login");
         setInfoOkPopupOpen(true);
       })
@@ -144,22 +158,14 @@ function App() {
   const [isInfoErrorPopupOpen, setInfoErrorPopupOpen] = React.useState(false);
   const [isInfoOkPopupOpen, setInfoOkPopupOpen] = React.useState(false);
 
-  const handleLogin = async ({email, password}) => {
-    return await auth.login(email, password)
-      .then(() => {
-        updateUserInfo();
-        console.log(email, password);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+
 
   const [email, setEmail] = React.useState('');
 
   const updateUserInfo = () => {
-    api.getUserInfo().then(({data}) => {
-      setEmail(data.email);
+    api.getUserInfo().then((data) => {
+      console.log(data);
+      setCurrentUser(data);
       setIsLoggedIn(true);
       navigate('/');
     })
@@ -167,6 +173,7 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setEmail('');
     navigate("/login");
   }
 
@@ -180,6 +187,7 @@ function App() {
         <Header
         handleLogout={handleLogout}
         email={email}
+        currentUser={currentUser}
         />
         <Routes>
 

@@ -1,6 +1,7 @@
 import React from "react";
 import DivWithForm from "./DivWithForm.jsx";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
+import { useEffect } from "react";
 
 function Register({ isOpen, onRegistration }) {
   const { currentUser } = React.useContext(CurrentUserContext);
