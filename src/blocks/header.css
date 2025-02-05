@@ -27,6 +27,22 @@
   filter: drop-shadow(0 4px 4px #000);
   cursor: pointer;
 }
+.header__user-email {
+  font-size: 18px;
+  font-weight: 500;
+  color: #FFF;
+  margin: 0 0 0 38%;
+}
+.header__close-sesion {
+  font-size: 18px;
+  font-weight: 400;
+  color: #A9A9A9;
+}
+.header__close-sesion:hover {
+  opacity: 0.8;
+  filter: drop-shadow(0 4px 4px #000);
+  cursor: pointer;
+}
 
 @media screen and (min-width: 800px) {
   .header__logo {

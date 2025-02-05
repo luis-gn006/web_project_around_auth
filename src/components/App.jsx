@@ -21,9 +21,9 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 function App() {
   //User info
   const [currentUser, setCurrentUser] = React.useState();
-  React.useEffect(() => {
+  /*React.useEffect(() => {
     api.getUserInfo().then((user) => setCurrentUser(user));
-  }, []);
+  }, []);*/
 
   //Popups
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
@@ -147,11 +147,27 @@ function App() {
   const handleLogin = async ({email, password}) => {
     return await auth.login(email, password)
       .then(() => {
+        updateUserInfo();
         console.log(email, password);
       })
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  const [email, setEmail] = React.useState('');
+
+  const updateUserInfo = () => {
+    api.getUserInfo().then(({data}) => {
+      setEmail(data.email);
+      setIsLoggedIn(true);
+      navigate('/');
+    })
+  }
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    navigate("/login");
   }
 
   const navigate = useNavigate();
@@ -161,7 +177,10 @@ function App() {
   return (
     <div className="page">
       <CurrentUserContext.Provider value={{ currentUser }}>
-        <Header />
+        <Header
+        handleLogout={handleLogout}
+        email={email}
+        />
         <Routes>
 
           <Route
