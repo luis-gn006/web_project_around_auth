@@ -21,7 +21,7 @@ function Header({handleLogout, email, }) {
         {location.pathname == "/register" && (
           <Link to="/login" className="header__register-login-link">Iniciar sesión</Link>
         )}
-        {currentUser && (
+        {email && (
           <a className="header__close-sesion" onClick={handleLogout}>
             Cerrar sesión
           </a>
