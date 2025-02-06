@@ -129,11 +129,14 @@ function App() {
 
   const handleLogin = async ({email, password}) => {
     return await auth.login(email, password)
-      .then((data) => {
+      .then((token) => {
         updateUserInfo();
         console.log(email, password);
         setEmail(email);
         setIsLoggedIn(true);
+        if (token) {
+          localStorage.setItem("jwt", token);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -172,6 +175,7 @@ function App() {
   }
 
   const handleLogout = () => {
+    localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     setEmail('');
     navigate("/login");
@@ -179,7 +183,32 @@ function App() {
 
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      api.getUserInfo().then((user) => {
+        setCurrentUser(user);
+        api.getInitialCards().then((cards) => {
+          setCards(cards);
+        });
+        api.getUserInfo("jwt")
+          .then(({email}) => {
+            setEmail(email);
+          });
+      });
+    }
+  }, [isLoggedIn]);
 
+  React.useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      updateUserInfo();
+      api.getUserInfo((user) => {
+        setEmail(user.email);
+      });
+    } else {
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <div className="page">
