@@ -5,6 +5,7 @@ import popupCross from "../images/popup__cross.svg";
 import popupCheck from "../images/popup__check.svg";
 import api from "../utils/Api.js";
 import * as auth from '../utils/auth.js'
+import * as token from '../utils/token.js'
 import Header from "./Header.jsx";
 import Login from "./Login.jsx";
 import Register from "./Register.jsx";
@@ -129,9 +130,9 @@ function App() {
 
   const handleLogin = async ({email, password}) => {
     return await auth.login(email, password)
-      .then((token) => {
+      .then(({token}) => {
         updateUserInfo();
-        console.log(email, password);
+        console.log();
         setEmail(email);
         setIsLoggedIn(true);
         if (token) {
@@ -167,7 +168,6 @@ function App() {
 
   const updateUserInfo = () => {
     api.getUserInfo().then((data) => {
-      console.log(data);
       setCurrentUser(data);
       setIsLoggedIn(true);
       navigate('/');
@@ -190,10 +190,6 @@ function App() {
         api.getInitialCards().then((cards) => {
           setCards(cards);
         });
-        api.getUserInfo("jwt")
-          .then(({email}) => {
-            setEmail(email);
-          });
       });
     }
   }, [isLoggedIn]);
@@ -208,6 +204,22 @@ function App() {
     } else {
       navigate("/login");
     }
+  }, []);
+
+  React.useEffect(() => {
+    const jwt = token.getToken();
+
+    if (!jwt) {
+      return;
+    }
+    auth
+      .getUserToken(jwt)
+      .then(({  data }) => {
+        setIsLoggedIn(true);
+        setEmail( data.email );
+        navigate("/");
+      })
+      .catch(console.error);
   }, []);
 
   return (

@@ -47,24 +47,14 @@ export const login = async (email, password) => {
 };
 
 export const getUserToken = async (token) => {
-  try {
-    const response = await fetch(`${BASE_URL}/users/me`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (err) {
-    console.error('Error:', err);
-    throw err;
-  }
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  });
 }
