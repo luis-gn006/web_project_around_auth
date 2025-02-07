@@ -1,5 +1,5 @@
 .div {
-  width: 358px;
+  width: 320px;
   height: 100%;
   background-color: #000000be;
   z-index: 1;
@@ -228,6 +228,9 @@
 }
 
 @media screen and (min-width: 1280px) {
+  .div {
+    width: 358px;
+  }
   .div__title-image {
     font-size: 18px;
   }
