@@ -20,6 +20,7 @@ import Footer from "./Footer.jsx";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 function App() {
+
   //User info
   const [currentUser, setCurrentUser] = React.useState();
   /*React.useEffect(() => {
@@ -57,6 +58,7 @@ function App() {
     setInfoErrorPopupOpen(false);
     setInfoOkPopupOpen(false);
   };
+  // Cerrar popups con "escape" o click afura del component
   React.useEffect(() => {
     document.addEventListener("keydown", (e) => {
       e.key == "Escape" && closeAllPopups();
@@ -125,14 +127,13 @@ function App() {
     setSelectedCard(card);
     setImagePopupOpen(true);
   };
+
   //Login
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-
   const handleLogin = async ({email, password}) => {
     return await auth.login(email, password)
       .then(({token}) => {
         updateUserInfo();
-        console.log();
         setEmail(email);
         setIsLoggedIn(true);
         if (token) {
@@ -148,7 +149,7 @@ function App() {
   //Registration
   const handleRegistration = async ({email, password}) => {
     return await auth.register(email, password)
-      .then(({data}) => {
+      .then(() => {
         navigate("/login");
         setInfoOkPopupOpen(true);
       })
@@ -158,13 +159,13 @@ function App() {
       });
   }
 
-  //Popup info
+  //Popup info registro y login
   const [isInfoErrorPopupOpen, setInfoErrorPopupOpen] = React.useState(false);
   const [isInfoOkPopupOpen, setInfoOkPopupOpen] = React.useState(false);
 
-
-
+  //email
   const [email, setEmail] = React.useState('');
+  const navigate = useNavigate();
 
   const updateUserInfo = () => {
     api.getUserInfo().then((data) => {
@@ -174,6 +175,7 @@ function App() {
     })
   }
 
+  //logout
   const handleLogout = () => {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
@@ -181,8 +183,7 @@ function App() {
     navigate("/login");
   }
 
-  const navigate = useNavigate();
-
+  //Checeo de si hay una sesion iniciada
   React.useEffect(() => {
     if (isLoggedIn) {
       api.getUserInfo().then((user) => {
@@ -194,22 +195,12 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  React.useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (token) {
-      updateUserInfo();
-      api.getUserInfo((user) => {
-        setEmail(user.email);
-      });
-    } else {
-      navigate("/login");
-    }
-  }, []);
-
+  //Checeo de token
   React.useEffect(() => {
     const jwt = token.getToken();
 
     if (!jwt) {
+      navigate("/login");
       return;
     }
     auth
