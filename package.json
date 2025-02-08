@@ -27,5 +27,6 @@
     "gh-pages": "^6.2.0",
     "globals": "^15.14.0",
     "vite": "^6.0.5"
-  }
+  },
+  "homepage": "https://luis-gn006.github.io/web_project_around_auth/"
 }
